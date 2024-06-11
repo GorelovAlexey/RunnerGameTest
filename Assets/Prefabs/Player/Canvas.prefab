@@ -530,27 +530,47 @@ MonoBehaviour:
   slider: {fileID: 4392843126471682048}
   sliderFill: {fileID: 5168659190554501189}
   animTimeSec: 0.35
-  panelSkins:
-  - minMoney: 0
-    sprite: {fileID: 21300000, guid: 8312dc0d842fd3945a7671f3e8a8227e, type: 3}
-    textColor: {r: 0.311, g: 0.013373013, b: 0.013373013, a: 1}
-    textText: HOBO
-  - minMoney: 30
-    sprite: {fileID: 21300000, guid: 19e740e63b05fcf4196959bfa5ecb2ec, type: 3}
-    textColor: {r: 1, g: 0.45336083, b: 0, a: 1}
-    textText: POOR
-  - minMoney: 60
-    sprite: {fileID: 21300000, guid: d350727458df1a248b9eb8e2aeb12b39, type: 3}
-    textColor: {r: 1, g: 0.917454, b: 0, a: 1}
-    textText: DECENT
-  - minMoney: 100
-    sprite: {fileID: 21300000, guid: 5370969914a3a31489f6c93bd43dd34d, type: 3}
-    textColor: {r: 0.31372344, g: 1, b: 0, a: 1}
-    textText: RICH
-  - minMoney: 140
-    sprite: {fileID: 21300000, guid: 0293ec7768029a1479146240bb8082f8, type: 3}
-    textColor: {r: 0, g: 0.9999995, b: 1, a: 1}
-    textText: MILLIONERE
+  skinsDictionary:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues: 0100000000000000020000000300000004000000
+    _keys: 0100000000000000020000000300000004000000
+    _values:
+    - sprite: {fileID: 21300000, guid: 8312dc0d842fd3945a7671f3e8a8227e, type: 3}
+      textColor: {r: 0.311, g: 0.013373013, b: 0.013373013, a: 1}
+      textText: HOBO
+    - sprite: {fileID: 21300000, guid: 19e740e63b05fcf4196959bfa5ecb2ec, type: 3}
+      textColor: {r: 1, g: 0.45336083, b: 0, a: 1}
+      textText: POOR
+    - sprite: {fileID: 21300000, guid: 19e740e63b05fcf4196959bfa5ecb2ec, type: 3}
+      textColor: {r: 1, g: 0.917454, b: 0, a: 1}
+      textText: DECENT
+    - sprite: {fileID: 21300000, guid: 19e740e63b05fcf4196959bfa5ecb2ec, type: 3}
+      textColor: {r: 0.31372344, g: 1, b: 0, a: 1}
+      textText: RICH
+    - sprite: {fileID: 21300000, guid: 19e740e63b05fcf4196959bfa5ecb2ec, type: 3}
+      textColor: {r: 0, g: 1, b: 0.9827192, a: 1}
+      textText: MILLIONERE
   maxMoney: 140
 --- !u!1 &7030888340327055539
 GameObject:

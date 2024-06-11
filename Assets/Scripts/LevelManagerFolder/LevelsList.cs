@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ButchersGames
+namespace Assets.Scripts.LevelManagerFolder
 {
     [CreateAssetMenu(menuName = "Data/Lvls List")]
     public class LevelsList : ScriptableObject

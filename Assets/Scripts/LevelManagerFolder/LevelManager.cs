@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using System.Linq;
 
-namespace ButchersGames
+namespace Assets.Scripts.LevelManagerFolder
 {
     public class LevelManager : MonoBehaviour
     {
@@ -122,14 +122,14 @@ namespace ButchersGames
             {
                 ClearChilds();
 #if UNITY_EDITOR
-            if (Application.isPlaying)
-            {
-                Instantiate(level, transform);
-            }
-            else
-            {
-                PrefabUtility.InstantiatePrefab(level, transform);
-            }
+                if (Application.isPlaying)
+                {
+                    Instantiate(level, transform);
+                }
+                else
+                {
+                    PrefabUtility.InstantiatePrefab(level, transform);
+                }
 #else
                 Instantiate(level, transform);
 #endif

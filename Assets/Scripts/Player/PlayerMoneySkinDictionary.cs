@@ -3,18 +3,21 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoneySkinDictionary : List<PlayerMoneySkin> { }
-
-[Serializable]
-public struct PlayerMoneySkin
+namespace Assets.Scripts.Player
 {
-    public float minMoney;
-    public Sprite sprite;
-    public Color textColor;
-    public string textText;
-}
+    [Serializable]
+    public class PlayerMoneySkinDictionary : SerializableDictionaryBase<PlayerMoneySkinKey, PlayerMoneySkin> { }
 
-public enum PlayerMoneySkinKey
-{
-    Poor, Decent, Rich
+    [Serializable]
+    public struct PlayerMoneySkin
+    {
+        public Sprite sprite;
+        public Color textColor;
+        public string textText;
+    }
+
+    public enum PlayerMoneySkinKey
+    {
+        Hobo, Poor, Decent, Rich, Millionere
+    }
 }
