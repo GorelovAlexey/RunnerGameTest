@@ -14,7 +14,8 @@ namespace Assets.Scripts.OtherObjects
 
         public void CapturePlayer(PlayerObject player)
         {
-            player.PlayerSlideController.CanMove = false;
+            // чтобы не влиять на анимацию
+            player.PlayerSlideController.SetCantMoveSilent(false);
         }
 
         public void ReleasePlayer(PlayerObject player)

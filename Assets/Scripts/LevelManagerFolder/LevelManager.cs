@@ -116,6 +116,8 @@ namespace Assets.Scripts.LevelManagerFolder
             }
         }
 
+
+        public Level LoadedLevel { get; set; }
         private void SelLevelParams(Level level)
         {
             if (level)
@@ -124,14 +126,15 @@ namespace Assets.Scripts.LevelManagerFolder
 #if UNITY_EDITOR
                 if (Application.isPlaying)
                 {
-                    Instantiate(level, transform);
+                    LoadedLevel = Instantiate(level, transform);
                 }
                 else
                 {
                     PrefabUtility.InstantiatePrefab(level, transform);
+                    LoadedLevel = transform.GetComponentInChildren<Level>();
                 }
 #else
-                Instantiate(level, transform);
+                LoadedLevel = Instantiate(level, transform);
 #endif
             }
         }

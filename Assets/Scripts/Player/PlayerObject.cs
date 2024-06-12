@@ -1,3 +1,4 @@
+using Assets.Scripts.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,34 +10,59 @@ namespace Assets.Scripts.Player
 {
     public class PlayerObject : MonoBehaviour
     {
-        PlayerSlideController slideController;
-        PlayerMoneyPanel panel;
 
         public SkinTransformDictionary skinTraformDictionary;
 
         public ReactiveProperty<PlayerMoneySkinKey> CurrentSkinKey = new ReactiveProperty<PlayerMoneySkinKey>(PlayerMoneySkinKey.Decent);
         public ReactiveProperty<int> MoneyCount = new ReactiveProperty<int>(60);
+        public int MaxMoney { get; private set; }
 
         public List<MoneySkinThreshold> moneySkinTrhesholds;
 
-        public PlayerSlideController PlayerSlideController => slideController;
+
+        private PlayerMoneyPanel _moneyPanel;
+        public PlayerMoneyPanel MoneyPanel => _moneyPanel ??= GetComponentInChildren<PlayerMoneyPanel>();
+
+
+        private PlayerSlideController _slideController;
+        public PlayerSlideController PlayerSlideController => _slideController ??= GetComponentInParent<PlayerSlideController>();
+
+
+        private PlayerAnimationController _playerAnimationController;
+        private PlayerAnimationController AnimationController => _playerAnimationController ??= GetComponentInChildren<PlayerAnimationController>();
 
         private void Awake()
         {
-            panel = GetComponentInParent<PlayerMoneyPanel>();
-            panel?.SetupSlider(this);
-
             moneySkinTrhesholds = moneySkinTrhesholds.OrderBy(x => x.key).ToList();
+            MaxMoney = moneySkinTrhesholds.Max(x => x.moneyMin);
 
             MoneyCount.Subscribe(UpdateMoney).AddTo(this);
             CurrentSkinKey.StartWith(CurrentSkinKey.Value)
                 .Subscribe(x => UpdateSkin(x)).AddTo(this);
 
             UpdateMoney(MoneyCount.Value);
+
+            MoneyPanel?.SetupSlider(this);
+
+            MoneyCount.Where(x => x <= 0).Subscribe(x =>
+            {
+                GameManager.Instance?.LevelFail();
+            });
         }
 
         private void UpdateMoney(int money)
         {
+            if (money > MaxMoney)
+            {
+                MoneyCount.Value = MaxMoney;
+                return;
+            }
+            if (money < 0)
+            {
+                MoneyCount.Value = 0;
+                return;
+            }
+
             var skin = CalculateCurrentMoneyKey(money);
             CurrentSkinKey.Value = skin;
         }
@@ -58,7 +84,6 @@ namespace Assets.Scripts.Player
 
         private void UpdateSkin(PlayerMoneySkinKey skin, bool force = false)
         {
-
             if (force)
                 CurrentSkinKey.SetValueAndForceNotify(skin);
             else
@@ -70,18 +95,38 @@ namespace Assets.Scripts.Player
             }
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public void Lose()
         {
-            slideController = GetComponentInParent<PlayerSlideController>();
-            panel = GetComponentInChildren<PlayerMoneyPanel>();
-            panel.MoneyValue = 0;
+            if (PlayerSlideController)
+                PlayerSlideController.CanMove = false;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Win()
         {
+            _moneyPanel?.gameObject.SetActive(false);
 
+            if (AnimationController)
+                AnimationController.Dance = true;
+
+            if (PlayerSlideController)
+                PlayerSlideController.CanMove = false;
+        }
+
+        public void FactoryReset()
+        {
+            _moneyPanel?.gameObject.SetActive(true);
+            MoneyCount.Value = 60;
+            if (AnimationController)
+                AnimationController.Dance = false;
+
+            if (PlayerSlideController)
+                PlayerSlideController.CanMove = false;
+        }
+
+        public void StartGame()
+        {
+            if (PlayerSlideController)
+                PlayerSlideController.CanMove = true;
         }
     }
 }

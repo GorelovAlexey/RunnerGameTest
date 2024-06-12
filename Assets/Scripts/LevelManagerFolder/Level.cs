@@ -4,6 +4,8 @@ namespace Assets.Scripts.LevelManagerFolder
 {
     public class Level : MonoBehaviour
     {
+        public Transform GetSpawnPoint() => playerSpawnPoint;
+
         [SerializeField] private Transform playerSpawnPoint;
 
 #if UNITY_EDITOR

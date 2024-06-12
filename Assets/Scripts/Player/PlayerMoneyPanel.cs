@@ -11,7 +11,7 @@ namespace Assets.Scripts.Player
 {
     public class PlayerMoneyPanel : MonoBehaviour
     {
-        [SerializeField] private TextMeshProUGUI statusText;
+        [SerializeField] private TextMeshProUGUI textStatus;
         [SerializeField] private Slider slider;
         [SerializeField] private Image sliderFill;
         [SerializeField] private float animTimeSec;
@@ -51,18 +51,20 @@ namespace Assets.Scripts.Player
         public void SetupSlider(PlayerObject o)
         {
             SliderDisplayValue = o.MoneyCount.Value;
+            slider.value = o.MoneyCount.Value;
 
-            o.MoneyCount.Subscribe(x => MoneyValue = x).AddTo(this);
-            o.CurrentSkinKey.Subscribe(x => UpdateSkin(x)).AddTo(this);
+            o.MoneyCount.StartWith(o.MoneyCount.Value).Subscribe(x => MoneyValue = x).AddTo(gameObject);
+            o.CurrentSkinKey.StartWith(o.CurrentSkinKey.Value).Subscribe(x => UpdateSkin(x)).AddTo(gameObject);
+
         }
 
         public void UpdateSkin(PlayerMoneySkinKey needSkin)
         {
             var applySkin = skinsDictionary[needSkin];
             sliderFill.sprite = applySkin.sprite;
-            statusText.color = applySkin.textColor;
+            textStatus.color = applySkin.textColor;
             // TODO LOCALIZE KEY;
-            statusText.text = applySkin.textText;
+            textStatus.text = applySkin.textText;
         }
     }
 }
